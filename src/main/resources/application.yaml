@@ -1,0 +1,31 @@
+spring:
+  datasource:
+     url: jdbc:postgresql://${app.bdd.host}/${app.bdd.database}
+
+management:
+  server:
+    port: 8888
+  endpoint:
+    health:
+      show-details: always
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+
+
+info:
+  ouidou:
+    db : ${spring.datasource.url}
+    version: '@project.version@'
