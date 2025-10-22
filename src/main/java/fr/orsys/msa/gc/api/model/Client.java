@@ -14,11 +14,8 @@ public class Client {
     private Integer id;
     private String lastname;
     private String firstname;
-    @JsonIgnore
     private String city;
-    @JsonIgnore
     private String zipCode;
-    @JsonIgnore
     private String address;
 
 }
