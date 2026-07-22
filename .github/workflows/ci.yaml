@@ -47,7 +47,7 @@ jobs:
       - name: Build & push (Jib)
         env:
           REG_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          REG_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          REG_TOKEN: ${{ secrets.DOCKERHUB_SECRET }}
         run: |
           mvn -B --no-transfer-progress compile jib:build \
             -Dimage=docker.io/$REG_USER/test-api:${{ steps.vars.outputs.tag }} \
