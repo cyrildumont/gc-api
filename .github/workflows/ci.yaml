@@ -28,3 +28,14 @@ jobs:
       #    -B (batch) = pas de sortie interactive ; --no-transfer-progress = logs propres.
       - name: Compile
         run: mvn -B --no-transfer-progress clean compile
+
+      - name: Package
+        run: mvn -B --no-transfer-progress package -DskipTests
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-jar
+          path: target/*.jar
+          if-no-files-found: warn
+          retention-days: 7
