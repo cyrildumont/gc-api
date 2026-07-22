@@ -1,0 +1,30 @@
+name: CI
+
+# Déclencheurs : à chaque push sur main et sur chaque pull request.
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Compile · Test · Package
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Récupération du code du dépôt.
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Installation du JDK + activation du cache Maven (~/.m2).
+      #    Le cache accélère nettement les runs suivants.
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      # 3. Compilation seule — échoue vite en cas d'erreur de code.
+      #    -B (batch) = pas de sortie interactive ; --no-transfer-progress = logs propres.
+      - name: Compile
+        run: mvn -B --no-transfer-progress clean compile
