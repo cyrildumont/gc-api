@@ -39,3 +39,17 @@ jobs:
           path: target/*.jar
           if-no-files-found: warn
           retention-days: 7
+
+      - name: Définir le tag
+        id: vars
+        run: echo "tag=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Build & push (Jib)
+        env:
+          REG_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          REG_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          mvn -B --no-transfer-progress compile jib:build \
+            -Dimage=docker.io/$REG_USER/test-api:${{ steps.vars.outputs.tag }} \
+            -Djib.to.auth.username="$REG_USER" \
+            -Djib.to.auth.password="$REG_TOKEN"
